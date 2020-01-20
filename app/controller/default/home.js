@@ -34,11 +34,12 @@ class HomeController extends Controller {
       'FROM article LEFT JOIN type ON article.type_id = type.id ' +
       'WHERE article.id=' + id;
     const result = await this.app.mysql.query(sql);
-    await this.app.mysql.update('article',{view_count:result[0].view_count ++ },{
+    await this.app.mysql.update('article',{ view_count:result[0].view_count +=1 },{
       where: {
         id: id
       }
     });
+    // console.log(await this.app.mysql.get('article',{id:id}))
     this.ctx.body = { data: result };
   }
   // 得到类别名称和编号
